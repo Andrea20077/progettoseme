@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a1c4fd 0%, #1966d6 100%);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: #e3f2fd;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .qr-container {
+            margin: 2rem 0;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #1565c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0d47a1;
+        }
+
+        .verification-container {
+            margin: 2rem 0;
+        }
+
+        .verification-message {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .success {
+            color: #4CAF50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        #answerInput {
+            padding: 8px;
+            width: 100px;
+            margin: 1rem 0;
+        }
+
+        #verifyButton {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #verifyButton:hover {
+            background-color: #0d47a1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Benvenuto nel nostro sito!</h1>
+        <p>Grazie per aver visitato il nostro sito web. Speriamo che tu possa trovare qui tutto ciò che cerchi. Esplora le nostre sezioni per scoprire i nostri prodotti e servizi.</p>
+        
+        <div class="verification-container">
+            <p id="equation-display"></p>
+            <input type="number" id="answerInput" placeholder="Inserisci la risposta">
+            <button id="verifyButton">Verifica</button>
+            <div id="message" class="verification-message"></div>
+        </div>
+
+        <div class="qr-container">
+            <img src="https://via.placeholder.com/200x200" alt="QR Code" class="qr-code">
+        </div>
+
+        <a href="#" class="btn">Scopri di più</a>
+    </div>
+
+    <script>
+        // Funzione per generare un'equazione casuale
+        function generateEquation() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const operators = ['+', '-', '*', '/'];
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+            
+            const equation = `${num1} ${operator} ${num2}`;
+            const equationDisplay = document.getElementById('equation-display');
+            equationDisplay.textContent = `Risolvi questa equazione: ${equation}`;
+            
+            // Salva la risposta corretta
+            const correctAnswer = eval(equation);
+            document.getElementById('correct-answer').textContent = correctAnswer;
+        }
+
+        // Funzione per verificare la risposta
+        function verifyAnswer() {
+            const userAnswer = parseFloat(document.getElementById('answerInput').value);
+            const correctAnswer = parseFloat(document.getElementById('correct-answer').textContent);
+            const message = document.getElementById('message');
+
+            if (userAnswer === correctAnswer) {
+                message.textContent = "Risposta corretta!";
+                message.className = "verification-message success";
+            } else {
+                message.textContent = "Risposta errata. Riprova!";
+                message.className = "verification-message error";
+            }
+        }
+
+        // Esegue la generazione dell'equazione all'avvio
+        generateEquation();
+
+        // Associa la funzione di verifica al pulsante
+        document.getElementById('verifyButton').addEventListener('click', verifyAnswer);
+    </script>
+</body>
+</html>
